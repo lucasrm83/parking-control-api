@@ -1,15 +1,8 @@
-package com.api.parkingcontrol.entities;
+package com.api.parkingcontrol.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
-import java.util.UUID;
-
-@Entity
-public class Car{
-
-    @Id
-    private UUID id;
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CarDto {
     @Column(nullable = false,unique = true, length =7)
     private String licensePlateCar;
     @Column(nullable = false,length =70)
@@ -18,13 +11,6 @@ public class Car{
     private String modelCar;
     @Column(nullable = false,length =70)
     private String colorCar;
-
-    @OneToOne
-    private ParkingSpot parkingSpot;
-
-    public Car(ParkingSpot parkingSpot) {
-        this.parkingSpot = parkingSpot;
-    }
 
     public String getLicensePlateCar() {
         return licensePlateCar;
@@ -56,13 +42,5 @@ public class Car{
 
     public void setColorCar(String colorCar) {
         this.colorCar = colorCar;
-    }
-
-    public ParkingSpot getParkingSpot() {
-        return parkingSpot;
-    }
-
-    public void setParkingSpot(ParkingSpot parkingSpot) {
-        this.parkingSpot = parkingSpot;
     }
 }
