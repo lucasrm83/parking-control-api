@@ -1,8 +1,12 @@
 package com.api.parkingcontrol.controllers;
 
 import com.api.parkingcontrol.dto.ParkingSpotDto;
+import com.api.parkingcontrol.entities.Car;
 import com.api.parkingcontrol.entities.ParkingSpot;
+import com.api.parkingcontrol.services.CarService;
 import com.api.parkingcontrol.services.ParkingSpotService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -20,18 +24,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
 public class ParkingSpotController {
     final ParkingSpotService parkingSpotService;
+    private CarService carService;
 
     public ParkingSpotController(ParkingSpotService parkingSpotService) {
         this.parkingSpotService = parkingSpotService;
     }
+    //carService.existByLicensePlateCar(parkingSpotDto.getCarDto().getLicensePlateCar())
     @PostMapping
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto){
-        if(parkingSpotService.existByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
+        if(parkingSpotService.existByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License plate car is already in use!");
         }
         if(parkingSpotService.existByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
@@ -42,6 +49,24 @@ public class ParkingSpotController {
         }
         var parkingSpot = new ParkingSpot();
         BeanUtils.copyProperties(parkingSpotDto, parkingSpot);
+        Car car = new Car(parkingSpotDto.getCar().getLicensePlateCar(),parkingSpotDto.getCar().getBrandCar(),
+                parkingSpotDto.getCar().getModelCar(),parkingSpotDto.getCar().getColorCar());
+
+
+
+        /*BeanUtils.copyProperties(parkingSpotDto, parkingSpot,
+                "sum","car","licensePlateCar",
+                "brandCar",
+                "modelCar",
+                "colorCar");
+
+        BeanUtils.copyProperties(parkingSpotDto, car, "parkingSpotNumber","car",
+                "registrationDate",
+                "responsibleName",
+                "apartment",
+                "block");*/
+        parkingSpot.setCar(car);
+        System.out.println(parkingSpot.getCar().getBrandCar()+"É null");
         parkingSpot.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpot));
     }

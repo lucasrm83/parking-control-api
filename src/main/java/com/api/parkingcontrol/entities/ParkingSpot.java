@@ -29,8 +29,11 @@ public class ParkingSpot implements Serializable {
     @Column(nullable = false,length =30)
     private String block;
 
-    @OneToOne(mappedBy ="parkingspot",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy ="parkingSpot",cascade = CascadeType.ALL)
     private Car car;
+
+    public ParkingSpot() {
+    }
 
     public UUID getId() {
         return id;

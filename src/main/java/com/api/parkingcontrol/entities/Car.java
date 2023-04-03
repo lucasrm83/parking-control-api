@@ -8,8 +8,9 @@ import java.util.UUID;
 public class Car{
 
     @Id
-    private UUID id;
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     @Column(nullable = false,unique = true, length =7)
     private String licensePlateCar;
     @Column(nullable = false,length =70)
@@ -22,8 +23,16 @@ public class Car{
     @OneToOne
     private ParkingSpot parkingSpot;
 
-    public Car(ParkingSpot parkingSpot) {
+    public Car() {
         this.parkingSpot = parkingSpot;
+    }
+
+    public Car(String licensePlateCar, String brandCar, String modelCar, String colorCar) {
+        this.licensePlateCar = licensePlateCar;
+        this.brandCar = brandCar;
+        this.modelCar = modelCar;
+        this.colorCar = colorCar;
+
     }
 
     public String getLicensePlateCar() {
