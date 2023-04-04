@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class ParkingSpotDto {
 
 
@@ -21,6 +21,7 @@ public class ParkingSpotDto {
     private String apartment;
     @NotBlank
     private String block;
+
 
     private CarDto car;
 

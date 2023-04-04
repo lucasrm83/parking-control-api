@@ -1,6 +1,7 @@
 package com.api.parkingcontrol.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class ParkingSpot implements Serializable {
     private String block;
 
     @OneToOne(mappedBy ="parkingSpot",cascade = CascadeType.ALL)
+
     private Car car;
 
     public ParkingSpot() {

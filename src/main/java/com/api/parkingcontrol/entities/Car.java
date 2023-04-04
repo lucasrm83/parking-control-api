@@ -1,5 +1,6 @@
 package com.api.parkingcontrol.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -21,17 +22,19 @@ public class Car{
     private String colorCar;
 
     @OneToOne
+    @JsonIgnore
     private ParkingSpot parkingSpot;
 
     public Car() {
         this.parkingSpot = parkingSpot;
     }
 
-    public Car(String licensePlateCar, String brandCar, String modelCar, String colorCar) {
+    public Car(String licensePlateCar, String brandCar, String modelCar, String colorCar,ParkingSpot parkingSpot) {
         this.licensePlateCar = licensePlateCar;
         this.brandCar = brandCar;
         this.modelCar = modelCar;
         this.colorCar = colorCar;
+        this.parkingSpot= parkingSpot;
 
     }
 

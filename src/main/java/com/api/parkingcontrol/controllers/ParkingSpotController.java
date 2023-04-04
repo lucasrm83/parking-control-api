@@ -50,7 +50,7 @@ public class ParkingSpotController {
         var parkingSpot = new ParkingSpot();
         BeanUtils.copyProperties(parkingSpotDto, parkingSpot);
         Car car = new Car(parkingSpotDto.getCar().getLicensePlateCar(),parkingSpotDto.getCar().getBrandCar(),
-                parkingSpotDto.getCar().getModelCar(),parkingSpotDto.getCar().getColorCar());
+                parkingSpotDto.getCar().getModelCar(),parkingSpotDto.getCar().getColorCar(),parkingSpot);
 
 
 
@@ -66,7 +66,7 @@ public class ParkingSpotController {
                 "apartment",
                 "block");*/
         parkingSpot.setCar(car);
-        System.out.println(parkingSpot.getCar().getBrandCar()+"É null");
+
         parkingSpot.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpot));
     }
