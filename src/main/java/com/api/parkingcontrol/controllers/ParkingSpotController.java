@@ -5,8 +5,6 @@ import com.api.parkingcontrol.entities.Car;
 import com.api.parkingcontrol.entities.ParkingSpot;
 import com.api.parkingcontrol.services.CarService;
 import com.api.parkingcontrol.services.ParkingSpotService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -15,12 +13,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,15 +26,16 @@ import java.util.UUID;
 @RequestMapping("/parking-spot")
 public class ParkingSpotController {
     final ParkingSpotService parkingSpotService;
-    private CarService carService;
+    final CarService carService;
 
-    public ParkingSpotController(ParkingSpotService parkingSpotService) {
+    public ParkingSpotController(ParkingSpotService parkingSpotService, CarService carService) {
         this.parkingSpotService = parkingSpotService;
+        this.carService = carService;
     }
     //carService.existByLicensePlateCar(parkingSpotDto.getCarDto().getLicensePlateCar())
     @PostMapping
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotDto parkingSpotDto){
-        if(parkingSpotService.existByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
+        if(carService.existByLicensePlateCar(parkingSpotDto.getCar().getLicensePlateCar())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License plate car is already in use!");
         }
         if(parkingSpotService.existByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
