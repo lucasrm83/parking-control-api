@@ -18,8 +18,8 @@ public class CarService {
         return carRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
-    public Optional<Car> findByBrandCar(String brandCar){
-        return carRepository.findBy()
+    public Optional<Car> findAllByBrandCar(String brandCar){
+        return carRepository.findAllByBrandCar(brandCar);
     }
 
 }
