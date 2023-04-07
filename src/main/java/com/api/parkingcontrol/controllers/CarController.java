@@ -2,14 +2,14 @@ package com.api.parkingcontrol.controllers;
 
 import com.api.parkingcontrol.entities.Car;
 import com.api.parkingcontrol.services.CarService;
+import org.apache.el.stream.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/cars")
@@ -25,6 +25,11 @@ public class CarController {
     @GetMapping
     public ResponseEntity<List<Car>> getAllCars(){
         return ResponseEntity.status(HttpStatus.OK).body(carService.findAll());
+    }
+
+    @GetMapping("/{brandCar}")
+    public ResponseEntity<List<Car>> getByBrandCar(@PathVariable(value = "brandCar") String brandCar){
+        return ResponseEntity.status(HttpStatus.OK).body(carService.findByBrandCar(brandCar));
     }
 
 
