@@ -6,6 +6,7 @@ import com.api.parkingcontrol.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,12 @@ public class CarService {
         return carRepository.existsByLicensePlateCar(licensePlateCar);
     }
 
-    public Optional<Car> findAllByBrandCar(String brandCar){
+    /*public Optional<Car> findAllByBrandCar(String brandCar){
         return carRepository.findAllByBrandCar(brandCar);
-    }
+    }*/
 
+
+    public List<Car> findAll() {
+        return carRepository.findAll();
+    }
 }

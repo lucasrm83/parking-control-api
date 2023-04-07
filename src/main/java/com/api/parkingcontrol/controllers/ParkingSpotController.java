@@ -46,8 +46,18 @@ public class ParkingSpotController {
         }
         var parkingSpot = new ParkingSpot();
         BeanUtils.copyProperties(parkingSpotDto, parkingSpot);
-        Car car = new Car(parkingSpotDto.getCar().getLicensePlateCar(),parkingSpotDto.getCar().getBrandCar(),
-                parkingSpotDto.getCar().getModelCar(),parkingSpotDto.getCar().getColorCar(),parkingSpot);
+        var car = new Car();
+
+        /*BeanUtils.copyProperties(parkingSpotDto, car, "parkingSpotNumber","car",
+                "registrationDate",
+                "responsibleName",
+                "apartment",
+                "block");*/
+        //System.out.println(car.getLicensePlateCar());
+        //BeanUtils.copyProperties(parkingSpotDto,car);
+        //System.out.println(parkingSpot.getCar().getBrandCar()+"Here i amm");
+        //var car = new Car(parkingSpotDto.getCar().getLicensePlateCar(),parkingSpotDto.getCar().getBrandCar(),
+        //        parkingSpotDto.getCar().getModelCar(),parkingSpotDto.getCar().getColorCar(),parkingSpot);
 
 
 
