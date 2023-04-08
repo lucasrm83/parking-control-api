@@ -31,6 +31,15 @@ public class CarController {
     public ResponseEntity<List<Car>> getByBrandCar(@PathVariable(value = "brandCar") String brandCar){
         return ResponseEntity.status(HttpStatus.OK).body(carService.findByBrandCar(brandCar));
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteCar(@PathVariable(value = "id")UUID id){
+        var carOptional = carService.findById(id);
+        if (!carOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car Not Found!");
+        }
+        carService.delete(carOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Car deleted successfuly! ");
+    }
 
 
 

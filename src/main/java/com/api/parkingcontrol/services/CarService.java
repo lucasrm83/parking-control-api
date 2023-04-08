@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CarService {
@@ -30,5 +31,11 @@ public class CarService {
 
     public List<Car> findByBrandCar(String brandCar) {
         return carRepository.findByBrandCar(brandCar);
+    }
+    public Optional<Car> findById(UUID id){
+        return carRepository.findById(id);
+    }
+    public void delete(Car car){
+        carRepository.delete(car);
     }
 }
