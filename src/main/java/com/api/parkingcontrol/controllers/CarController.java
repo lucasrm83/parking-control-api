@@ -40,6 +40,10 @@ public class CarController {
         carService.delete(carOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Car deleted successfuly! ");
     }
+    @PutMapping("/update{id}")
+    public ResponseEntity<Object> updateCar(@PathVariable(value = "id")UUID id){
+
+    }
 
 
 
