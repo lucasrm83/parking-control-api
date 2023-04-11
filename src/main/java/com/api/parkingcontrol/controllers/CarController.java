@@ -1,8 +1,12 @@
 package com.api.parkingcontrol.controllers;
 
+import com.api.parkingcontrol.dto.CarDto;
 import com.api.parkingcontrol.entities.Car;
+import com.api.parkingcontrol.entities.ParkingSpot;
 import com.api.parkingcontrol.services.CarService;
+import jakarta.validation.Valid;
 import org.apache.el.stream.Optional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +45,16 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body("Car deleted successfuly! ");
     }
     @PutMapping("/update{id}")
-    public ResponseEntity<Object> updateCar(@PathVariable(value = "id")UUID id){
+    public ResponseEntity<Object> updateCar(@PathVariable(value = "id")UUID id, @RequestBody @Valid CarDto carDto){
+        var carOptional = carService.findById(id);
+        if (!carOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car Not Found!");
+        }
+        var car = new Car();
+        BeanUtils.copyProperties(carDto,car);
+        car.setId(carOptional.get().getId());
 
+        return ResponseEntity.status(HttpStatus.OK).body(carService.save(car));
     }
 
 

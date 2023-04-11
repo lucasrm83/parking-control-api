@@ -38,4 +38,8 @@ public class CarService {
     public void delete(Car car){
         carRepository.delete(car);
     }
+
+    public Car save(Car car) {
+        return carRepository.save(car);
+    }
 }
